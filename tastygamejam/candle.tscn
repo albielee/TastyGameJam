@@ -1,9 +1,11 @@
 [gd_scene load_steps=8 format=3 uid="uid://g48fcp5lmk5k"]
 
+
 [ext_resource type="Script" path="res://candle.gd" id="1_fe1gs"]
 [ext_resource type="Texture2D" uid="uid://cm424qw74audx" path="res://Assets/candle_lit.png" id="2_7d4ri"]
 [ext_resource type="Texture2D" uid="uid://bsbv8wncu2ry0" path="res://Assets/light_basic.png" id="2_77vsy"]
 [ext_resource type="Texture2D" uid="uid://5xuk8xomlmgp" path="res://Assets/candle_unlit.png" id="2_yrj3c"]
+[ext_resource type="PackedScene" uid="uid://cey3jyexas510" path="res://fire.tscn" id="5_rfeay"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_jlj8c"]
 
@@ -48,3 +50,5 @@ texture = ExtResource("2_77vsy")
 [node name="LightOccluder2D" type="LightOccluder2D" parent="."]
 position = Vector2(0, -1)
 occluder = SubResource("OccluderPolygon2D_5vaey")
+
+[node name="Fire" parent="." instance=ExtResource("5_rfeay")]

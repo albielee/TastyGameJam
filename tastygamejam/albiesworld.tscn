@@ -1,12 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://c27qgqobiq3sy"]
+[gd_scene load_steps=5 format=3 uid="uid://c27qgqobiq3sy"]
 
 [ext_resource type="PackedScene" uid="uid://ymxpjsjrd8cd" path="res://player.tscn" id="1_8lb6i"]
 [ext_resource type="Script" path="res://camera_2d.gd" id="2_072x2"]
-[ext_resource type="PackedScene" uid="uid://bsvutuuhu72of" path="res://wind_down.tscn" id="3_5oyb2"]
 [ext_resource type="PackedScene" uid="uid://bqqh3gjnbcdyd" path="res://candle.tscn" id="4_7fdrq"]
 [ext_resource type="PackedScene" uid="uid://bwbdqqagtxtdy" path="res://wind_left.tscn" id="5_7g68r"]
-[ext_resource type="PackedScene" uid="uid://dm2jrjjq1ihb3" path="res://wind_right.tscn" id="5_8mqx2"]
-[ext_resource type="PackedScene" uid="uid://dcl30ce0dmpvv" path="res://wind_up.tscn" id="7_vl3q0"]
 
 [node name="albiesworld" type="Node2D"]
 
@@ -20,14 +17,7 @@ script = ExtResource("2_072x2")
 [node name="Candle" parent="." instance=ExtResource("4_7fdrq")]
 position = Vector2(149, 142)
 
-[node name="WindDown" parent="." instance=ExtResource("3_5oyb2")]
-position = Vector2(344, -209)
-
 [node name="WindLeft" parent="." instance=ExtResource("5_7g68r")]
-position = Vector2(786, 87)
-
-[node name="WindRight" parent="." instance=ExtResource("5_8mqx2")]
-position = Vector2(-102, 93)
-
-[node name="WindUp" parent="." instance=ExtResource("7_vl3q0")]
-position = Vector2(364, 388)
+position = Vector2(787, 87)
+TIMED_WIND = true
+WIND_INTERNAL = 7
