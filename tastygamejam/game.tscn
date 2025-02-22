@@ -312,6 +312,6 @@ color = Color(0.29219, 0.29219, 0.29219, 1)
 [node name="UI_Layer" type="CanvasLayer" parent="."]
 
 [node name="PointLight2D" parent="." instance=ExtResource("2_qyupj")]
-position = Vector2(711, 280)
-scale = Vector2(0.334865, 0.334865)
+position = Vector2(249, 84)
+scale = Vector2(1.21791, 1.20688)
 shadow_enabled = true
