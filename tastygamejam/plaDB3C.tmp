@@ -121,6 +121,7 @@ func handle_movement(delta: float) -> void:
 		new_velocity = velocity.move_toward(direction * SPEED
 		*
 		(0.8 + (0.2 * (get_global_mouse_position() - global_position).normalized().dot(direction.normalized()))), ACCELERATION * delta)
+		print('factor', (0.8 + (0.2 * (get_global_mouse_position() - global_position).normalized().dot(direction.normalized())))
 	# Apply deceleration when there's no input
 	else:
 		new_velocity = velocity.move_toward(Vector2.ZERO, DECELERATION * delta)
@@ -175,11 +176,18 @@ polygon = PackedVector2Array(15, -24, 0, 0, 12, 26, -7, 28, -23, 14, -28, 0, -22
 collision_layer = 3
 collision_mask = 3
 script = SubResource("GDScript_o338r")
+SPEED = null
 ACCELERATION = 1500.0
 DECELERATION = 2000.0
-MAX_MATCH_LIFE = 600.0
-MATCH_BURN_SPEED = 45.0
+MAX_MATCH_LIFE = null
+MATCH_BURN_SPEED = 40.0
 STABLE_MATCH_BRIGHTNESS = 1
+MATCH_FLICKER_STRENGTH = null
+MATCH_FLICKER_FREQ = null
+MATCH_FLICKER_RECOVERY = null
+MATCH_STABLE_CHANGE = null
+WIND_BLOW_OUT_RANGE = null
+WIND_BLOW_OUT_TIME = null
 
 [node name="PlayerCollisionShape" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_bd6o0")
