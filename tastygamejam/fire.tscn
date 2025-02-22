@@ -47,4 +47,5 @@ hue_variation_curve = SubResource("CurveTexture_m7cay")
 [node name="Fire" type="GPUParticles2D"]
 amount = 60
 process_material = SubResource("ParticleProcessMaterial_vsruc")
+lifetime = 0.3
 fixed_fps = 60

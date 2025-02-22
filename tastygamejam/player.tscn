@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bh2w2wp4hhhtx"]
+[gd_scene load_steps=10 format=3 uid="uid://ymxpjsjrd8cd"]
 
 [ext_resource type="Texture2D" uid="uid://dl81h06ieuqw6" path="res://Assets/matchbody.png" id="1_0bhld"]
 [ext_resource type="Texture2D" uid="uid://bsbv8wncu2ry0" path="res://Assets/light_basic.png" id="1_v4y45"]
@@ -162,7 +162,6 @@ DECELERATION = 2000.0
 STABLE_MATCH_BRIGHTNESS = 1
 
 [node name="PlayerCollisionShape" type="CollisionShape2D" parent="."]
-scale = Vector2(1, 1)
 shape = SubResource("CapsuleShape2D_bd6o0")
 
 [node name="HeldMatch" type="Area2D" parent="." groups=["CandleFire", "Wind"]]
