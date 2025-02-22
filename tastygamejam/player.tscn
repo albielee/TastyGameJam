@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://ymxpjsjrd8cd"]
+[gd_scene load_steps=9 format=3 uid="uid://bh2w2wp4hhhtx"]
 
 [ext_resource type="Texture2D" uid="uid://dl81h06ieuqw6" path="res://Assets/matchbody.png" id="1_0bhld"]
 [ext_resource type="Texture2D" uid="uid://bsbv8wncu2ry0" path="res://Assets/light_basic.png" id="1_v4y45"]
@@ -24,7 +24,7 @@ script/source = "extends CharacterBody2D
 @export var MATCH_FLICKER_RECOVERY = 0.02 ;
 @export var MATCH_STABLE_CHANGE = 0.02 ;
 @export var WIND_BLOW_OUT_RANGE = 0.5
-@export var WIND_BLOW_OUT_TIME = 500
+@export var WIND_BLOW_OUT_TIME = 1000
 
 var CORRECT_HEAD_SCALING
 var CORRECT_LIGHT_SCALING
@@ -74,7 +74,6 @@ func handle_match_life(delta: float) -> void:
 								CORRECT_HEAD_SCALING * 2 * match_life/MAX_MATCH_LIFE)
 	matchlight.scale = Vector2(CORRECT_LIGHT_SCALING * 2 * match_life/MAX_MATCH_LIFE,
 								CORRECT_LIGHT_SCALING * 2 * match_life/MAX_MATCH_LIFE)
-	print(match_life/MAX_MATCH_LIFE)
 
 func handle_movement(delta: float) -> void:
 	var direction = Vector2.ZERO
@@ -134,8 +133,9 @@ func _on_held_match_area_exited(area: Area2D) -> void:
 		current_wind_object = null
 "
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_qgfh1"]
-radius = 28.2843
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bd6o0"]
+radius = 21.0
+height = 56.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_2dc5o"]
 radius = 3.0
@@ -153,7 +153,8 @@ DECELERATION = 2000.0
 STABLE_MATCH_BRIGHTNESS = 1
 
 [node name="PlayerCollisionShape" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_qgfh1")
+scale = Vector2(1, 1)
+shape = SubResource("CapsuleShape2D_bd6o0")
 
 [node name="HeldMatch" type="Area2D" parent="." groups=["CandleFire", "Wind"]]
 position = Vector2(26, 3)
