@@ -1,0 +1,59 @@
+[gd_scene load_steps=3 format=3 uid="uid://ymxpjsjrd8cd"]
+
+[sub_resource type="GDScript" id="GDScript_o338r"]
+script/source = "extends CharacterBody2D
+
+
+@export var SPEED = 300.0
+@export var ACCELERATION : float = 800
+@export var DECELERATION : float = 600
+
+func handle_movement(delta: float) -> void:
+	var direction = Vector2.ZERO
+
+	# Input for movement: Arrow keys or WASD
+	if Input.is_action_pressed(\"ui_right\"):
+		direction.x += 1
+	if Input.is_action_pressed(\"ui_left\"):
+		direction.x -= 1
+	if Input.is_action_pressed(\"ui_down\"):
+		direction.y += 1
+	if Input.is_action_pressed(\"ui_up\"):
+		direction.y -= 1
+
+	# Normalize the direction to ensure consistent movement speed in all directions
+	if direction != Vector2.ZERO:
+		direction = direction.normalized()
+		
+	# Apply acceleration
+	if direction != Vector2.ZERO:
+		velocity = velocity.move_toward(direction * SPEED, ACCELERATION * delta)
+	# Apply deceleration when there's no input
+	else:
+		velocity = velocity.move_toward(Vector2.ZERO, DECELERATION * delta)
+
+	# Move the player
+	velocity = direction * SPEED
+	move_and_slide()
+
+func handle_rotation() -> void:
+	# Get the mouse position and calculate the angle to face it
+	var mouse_position = get_global_mouse_position()
+	var angle_to_mouse = (mouse_position - global_position).angle()
+
+	# Rotate the player to face the mouse
+	rotation = angle_to_mouse
+
+func _physics_process(delta: float) -> void:
+	handle_movement(delta)
+	handle_rotation();
+	
+"
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_qgfh1"]
+
+[node name="Player" type="CharacterBody2D"]
+script = SubResource("GDScript_o338r")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_qgfh1")
