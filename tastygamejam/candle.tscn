@@ -1,12 +1,12 @@
-[gd_scene load_steps=3 format=3 uid="uid://b83a116k8ifa5"]
+[gd_scene load_steps=3 format=3 uid="uid://bqqh3gjnbcdyd"]
 
 [ext_resource type="Script" path="res://candle.gd" id="1_fe1gs"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_t8atm"]
 
-[node name="Candle" type="Area2D"]
+[node name="Candle" type="Area2D" groups=["CandleFire"]]
 script = ExtResource("1_fe1gs")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=["CandleFire"]]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 2)
 shape = SubResource("RectangleShape2D_t8atm")
