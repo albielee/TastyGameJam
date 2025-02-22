@@ -2,6 +2,7 @@ extends StaticBody2D
 
 @onready var candlelight = $CandleLight;
 @onready var lit_sprite = $Lit_sprite;
+@onready var fire = $Fire;
 
 @export var STABLE_CANDLE_BRIGHTNESS = 2;
 @export var CANDLE_RECOVERY = 0.02;
@@ -12,6 +13,7 @@ var is_lit = false
 var current_candle_brightness = 0;
 
 func _ready() -> void:
+	fire.visible = false
 	if is_lit:
 		current_candle_brightness = STABLE_CANDLE_BRIGHTNESS
 		lit_sprite.visible = true
@@ -28,4 +30,5 @@ func _process(_delta: float) -> void:
 
 func light():
 	is_lit = true
+	fire.visible = true
 	lit_sprite.visible = true
