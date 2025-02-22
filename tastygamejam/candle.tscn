@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://g48fcp5lmk5k"]
+[gd_scene load_steps=8 format=3 uid="uid://bqqh3gjnbcdyd"]
 
 [ext_resource type="Script" path="res://candle.gd" id="1_fe1gs"]
 [ext_resource type="Texture2D" uid="uid://cm424qw74audx" path="res://Assets/candle_lit.png" id="2_7d4ri"]

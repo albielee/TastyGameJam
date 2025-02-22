@@ -1,9 +1,11 @@
-[gd_scene load_steps=9 format=4 uid="uid://dnyderq5mg87n"]
+[gd_scene load_steps=10 format=4 uid="uid://cg85ee30dfwk3"]
 
 [ext_resource type="Script" path="res://game.gd" id="1_hva66"]
 [ext_resource type="Texture2D" uid="uid://0vucvefrois" path="res://Assets/mainlevbuild.png" id="1_xmjuj"]
-[ext_resource type="PackedScene" uid="uid://bh2w2wp4hhhtx" path="res://player.tscn" id="3_2j4in"]
-[ext_resource type="PackedScene" uid="uid://g48fcp5lmk5k" path="res://candle.tscn" id="3_8kp3u"]
+[ext_resource type="PackedScene" uid="uid://ymxpjsjrd8cd" path="res://player.tscn" id="3_2j4in"]
+[ext_resource type="PackedScene" uid="uid://bqqh3gjnbcdyd" path="res://candle.tscn" id="3_8kp3u"]
+[ext_resource type="PackedScene" uid="uid://dcl30ce0dmpvv" path="res://wind_up.tscn" id="4_dutq3"]
+[ext_resource type="PackedScene" uid="uid://dyiyfthdwf5qx" path="res://camera_2d.tscn" id="5_e3seu"]
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_7l6ho"]
 polygon = PackedVector2Array(-14.1421, 14.8492, -24, 18.0312, -24, 8.13173)
@@ -335,3 +337,14 @@ position = Vector2(744, 164)
 
 [node name="Player" parent="." instance=ExtResource("3_2j4in")]
 position = Vector2(51, 270)
+
+[node name="WindUp" parent="." instance=ExtResource("4_dutq3")]
+position = Vector2(457, 421)
+
+[node name="CollisionShape2D" parent="WindUp" index="1"]
+position = Vector2(-1.99997, 164.5)
+
+[node name="Camera2D" parent="." instance=ExtResource("5_e3seu")]
+position = Vector2(471.653, 100.224)
+
+[editable path="WindUp"]
