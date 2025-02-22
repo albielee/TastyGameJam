@@ -49,7 +49,7 @@ collision_friction = 0.0
 collision_bounce = 0.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1yyqn"]
-size = Vector2(217.25, 156)
+size = Vector2(217.25, 253)
 
 [node name="WindUp" type="Area2D" groups=["Wind"]]
 rotation = 3.14159

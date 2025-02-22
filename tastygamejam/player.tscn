@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bh2w2wp4hhhtx"]
+[gd_scene load_steps=9 format=3 uid="uid://ymxpjsjrd8cd"]
 
 [ext_resource type="Texture2D" uid="uid://dl81h06ieuqw6" path="res://Assets/matchbody.png" id="1_0bhld"]
 [ext_resource type="Texture2D" uid="uid://bsbv8wncu2ry0" path="res://Assets/light_basic.png" id="1_v4y45"]
@@ -24,6 +24,7 @@ script/source = "extends CharacterBody2D
 @export var MATCH_FLICKER_RECOVERY = 0.02 ;
 @export var MATCH_STABLE_CHANGE = 0.02 ;
 @export var WIND_BLOW_OUT_RANGE = 0.5
+@export var WIND_BLOW_OUT_TIME = 500
 
 var CORRECT_HEAD_SCALING
 var CORRECT_LIGHT_SCALING
@@ -45,13 +46,14 @@ func _physics_process(delta: float) -> void:
 	
 func _process(delta: float) -> void:
 	handle_match_life(delta)
-	handle_wind()
+	handle_wind(delta)
 
-func handle_wind():
+func handle_wind(delta: float):
 	if current_wind_object != null:
 		if(current_wind_object.facing_direction > rotation + WIND_BLOW_OUT_RANGE or current_wind_object.facing_direction < rotation - WIND_BLOW_OUT_RANGE):
-			match_life = 0;
-			print(\"match extinguished\")
+			if(match_life > 0):
+				stability = 0.5
+				match_life -= delta*WIND_BLOW_OUT_TIME;
 
 func handle_match_life(delta: float) -> void:
 	if(match_running_out and match_life > 0):
