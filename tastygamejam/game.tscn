@@ -1,7 +1,7 @@
-[gd_scene load_steps=7 format=4 uid="uid://dnyderq5mg87n"]
+[gd_scene load_steps=8 format=4 uid="uid://dnyderq5mg87n"]
 
 [ext_resource type="Texture2D" uid="uid://0vucvefrois" path="res://Assets/mainlevbuild.png" id="1_xmjuj"]
-[ext_resource type="PackedScene" uid="uid://cfl6gtffn03tj" path="res://light.tscn" id="2_qyupj"]
+[ext_resource type="PackedScene" uid="uid://bh2w2wp4hhhtx" path="res://player.tscn" id="3_2j4in"]
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_7l6ho"]
 polygon = PackedVector2Array(-14.1421, 14.8492, -24, 18.0312, -24, 8.13173)
@@ -310,6 +310,9 @@ occlusion_layer_0/light_mask = 1
 occlusion_layer_0/sdf_collision = true
 sources/0 = SubResource("TileSetAtlasSource_sb7uw")
 
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_dyxmv"]
+polygon = PackedVector2Array(174, 207, 191, 211, 192, 193)
+
 [node name="Game" type="Node2D"]
 
 [node name="Tiles" type="TileMapLayer" parent="."]
@@ -326,9 +329,6 @@ position = Vector2(154, 269)
 scale = Vector2(0.5679, 0.5679)
 shadow_enabled = true
 
-[node name="Player" parent="." instance=ExtResource("3_w0sag")]
-position = Vector2(-20, 253)
-
 [node name="Candle" parent="." instance=ExtResource("4_c1hnc")]
 position = Vector2(155, 149)
 
@@ -337,3 +337,8 @@ position = Vector2(603, 151)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 script = ExtResource("5_ivw5i")
+[node name="Player" parent="." instance=ExtResource("3_2j4in")]
+position = Vector2(51, 270)
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="."]
+occluder = SubResource("OccluderPolygon2D_dyxmv")

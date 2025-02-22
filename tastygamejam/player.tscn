@@ -1,7 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://ymxpjsjrd8cd"]
+[gd_scene load_steps=8 format=3 uid="uid://bh2w2wp4hhhtx"]
+
+[ext_resource type="Texture2D" uid="uid://bsbv8wncu2ry0" path="res://Assets/light_basic.png" id="1_v4y45"]
 
 [sub_resource type="GDScript" id="GDScript_o338r"]
 script/source = "extends CharacterBody2D
+
+@onready var candlelight = $HeldCandle/CandleLight
 
 #export vars
 @export var SPEED = 300.0
@@ -10,10 +14,17 @@ script/source = "extends CharacterBody2D
 
 @export var MAX_CANDLE_DURATION : float = 1000
 @export var CANDLE_BURN_SPEED : float = 10;
+@export var stable_candle_brightness = 2;
+@export var candle_flicker_strength = 0.5;
+@export var candle_flicker_freq = 1;
+@export var candle_flicker_recovery = 0.02 ;
+@export var candle_stable_change = 0.02 ;
 
-#
+var current_candle_brightness = 0
 var candle_life : float = MAX_CANDLE_DURATION
 var candle_running_out = true
+var stability = 1
+var rng = RandomNumberGenerator.new()
 
 func _physics_process(delta: float) -> void:
 	handle_movement(delta)
@@ -25,9 +36,22 @@ func _process(delta: float) -> void:
 func handle_candle_life(delta: float) -> void:
 	if(candle_running_out and candle_life > 0):
 		candle_life -= delta*CANDLE_BURN_SPEED
+	
+	if rng.randf() > stability:
+		current_candle_brightness = (candle_flicker_strength) * current_candle_brightness
+	
+	if current_candle_brightness != stable_candle_brightness:
+		current_candle_brightness +=  (stable_candle_brightness - current_candle_brightness)*candle_flicker_recovery
+	
+	#add some randomness
+	current_candle_brightness += randf_range(-candle_stable_change, candle_stable_change) * current_candle_brightness
+	stability += (1 - stability) *0.1
+	
+	candlelight.energy = current_candle_brightness
 
 func handle_movement(delta: float) -> void:
 	var direction = Vector2.ZERO
+	var new_velocity = Vector2.ZERO
 
 	# Input for movement: Arrow keys or WASD
 	if Input.is_action_pressed(\"ui_right\"):
@@ -42,14 +66,17 @@ func handle_movement(delta: float) -> void:
 	# Normalize the direction to ensure consistent movement speed in all directions
 	if direction != Vector2.ZERO:
 		direction = direction.normalized()
-		
+	
 	# Apply acceleration
 	if direction != Vector2.ZERO:
-		velocity = velocity.move_toward(direction * SPEED, ACCELERATION * delta)
+		new_velocity = velocity.move_toward(direction * SPEED, ACCELERATION * delta)
 	# Apply deceleration when there's no input
 	else:
-		velocity = velocity.move_toward(Vector2.ZERO, DECELERATION * delta)
-
+		new_velocity = velocity.move_toward(Vector2.ZERO, DECELERATION * delta)
+	
+	if (new_velocity-velocity).length() > 25:
+		stability -= 0.02
+	velocity = new_velocity
 	move_and_slide()
 
 func handle_rotation() -> void:
@@ -81,8 +108,22 @@ radius = 28.2843
 radius = 3.0
 height = 42.0
 
+[sub_resource type="Animation" id="Animation_65yrp"]
+resource_name = "candle_flicker"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_w60f4"]
+_data = {
+"candle_flicker": SubResource("Animation_65yrp")
+}
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_mu1d4"]
+polygon = PackedVector2Array(15, -24, 0, 0, 12, 26, -7, 28, -23, 14, -28, 0, -22, -16, -7, -28)
+
 [node name="Player" type="CharacterBody2D"]
 script = SubResource("GDScript_o338r")
+ACCELERATION = 1500.0
+DECELERATION = 2000.0
+candle_flicker_strength = 0.2
 
 [node name="PlayerCollisionShape" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_qgfh1")
@@ -93,5 +134,20 @@ shape = SubResource("CircleShape2D_qgfh1")
 position = Vector2(36, 0)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_2dc5o")
+
+[node name="CandleLight" type="PointLight2D" parent="HeldCandle"]
+position = Vector2(36, 1)
+color = Color(0.721079, 0.187449, 0.345573, 1)
+energy = 1.7
+shadow_enabled = true
+texture = ExtResource("1_v4y45")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="HeldCandle"]
+libraries = {
+"": SubResource("AnimationLibrary_w60f4")
+}
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="."]
+occluder = SubResource("OccluderPolygon2D_mu1d4")
 
 [connection signal="area_entered" from="HeldCandle" to="." method="_on_held_candle_area_entered"]
