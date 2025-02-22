@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=4 uid="uid://dnyderq5mg87n"]
+[gd_scene load_steps=9 format=4 uid="uid://dnyderq5mg87n"]
 
 [ext_resource type="Texture2D" uid="uid://0vucvefrois" path="res://Assets/mainlevbuild.png" id="1_xmjuj"]
 [ext_resource type="PackedScene" uid="uid://bh2w2wp4hhhtx" path="res://player.tscn" id="3_2j4in"]
+[ext_resource type="PackedScene" uid="uid://g48fcp5lmk5k" path="res://candle.tscn" id="3_8kp3u"]
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_7l6ho"]
 polygon = PackedVector2Array(-14.1421, 14.8492, -24, 18.0312, -24, 8.13173)
@@ -124,6 +125,7 @@ texture_region_size = Vector2i(48, 48)
 5:11/0 = 0
 6:11/0 = 0
 6:11/0/occlusion_layer_0/polygon = SubResource("OccluderPolygon2D_7l6ho")
+6:11/0/physics_layer_0/polygon_0/points = PackedVector2Array(-24, -24, 24, -24, 24, 24, -24, 24)
 8:11/0 = 0
 9:11/0 = 0
 10:11/0 = 0
@@ -280,7 +282,9 @@ texture_region_size = Vector2i(48, 48)
 4:10/0 = 0
 5:10/0 = 0
 6:10/0 = 0
+6:10/0/physics_layer_0/polygon_0/points = PackedVector2Array(-24, -24, 24, -24, 24, 24, -24, 24)
 7:10/0 = 0
+7:10/0/physics_layer_0/polygon_0/points = PackedVector2Array(-24, -24, 24, -24, 24, 24, -24, 24)
 8:10/0 = 0
 9:10/0 = 0
 10:10/0 = 0
@@ -292,6 +296,7 @@ texture_region_size = Vector2i(48, 48)
 16:10/0 = 0
 7:11/0 = 0
 7:11/0/occlusion_layer_0/polygon = SubResource("OccluderPolygon2D_j2xui")
+7:11/0/physics_layer_0/polygon_0/points = PackedVector2Array(-24, -24, 24, -24, 24, 24, -24, 24)
 16:11/0 = 0
 7:12/0 = 0
 16:12/0 = 0
@@ -308,6 +313,8 @@ texture_region_size = Vector2i(48, 48)
 tile_size = Vector2i(48, 48)
 occlusion_layer_0/light_mask = 1
 occlusion_layer_0/sdf_collision = true
+physics_layer_0/collision_layer = 3
+physics_layer_0/collision_mask = 3
 sources/0 = SubResource("TileSetAtlasSource_sb7uw")
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_dyxmv"]
@@ -324,8 +331,11 @@ color = Color(0.29219, 0.29219, 0.29219, 1)
 
 [node name="UI_Layer" type="CanvasLayer" parent="."]
 
-[node name="Player" parent="." instance=ExtResource("3_2j4in")]
-position = Vector2(51, 270)
-
 [node name="LightOccluder2D" type="LightOccluder2D" parent="."]
 occluder = SubResource("OccluderPolygon2D_dyxmv")
+
+[node name="Candle" parent="." instance=ExtResource("3_8kp3u")]
+position = Vector2(744, 164)
+
+[node name="Player" parent="." instance=ExtResource("3_2j4in")]
+position = Vector2(51, 270)
