@@ -69,3 +69,5 @@ trail_section_subdivisions = 96
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-2, -3)
 shape = SubResource("RectangleShape2D_1yyqn")
+
+[node name="Timer" type="Timer" parent="."]

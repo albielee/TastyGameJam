@@ -1,10 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://bh2w2wp4hhhtx"]
+[gd_scene load_steps=10 format=3 uid="uid://ymxpjsjrd8cd"]
 
 [ext_resource type="Texture2D" uid="uid://dl81h06ieuqw6" path="res://Assets/matchbody.png" id="1_0bhld"]
 [ext_resource type="Texture2D" uid="uid://bsbv8wncu2ry0" path="res://Assets/light_basic.png" id="1_v4y45"]
 [ext_resource type="Texture2D" uid="uid://cfh5sfe6umvry" path="res://Assets/playerbasic.png" id="2_7k6bu"]
 [ext_resource type="Texture2D" uid="uid://6ibbb2bb0gux" path="res://Assets/matchhead.png" id="2_132f8"]
-[ext_resource type="PackedScene" uid="uid://djbu6f3j1hned" path="res://fire.tscn" id="5_h0cvo"]
+[ext_resource type="PackedScene" uid="uid://cey3jyexas510" path="res://fire.tscn" id="5_h0cvo"]
 
 [sub_resource type="GDScript" id="GDScript_o338r"]
 script/source = "extends CharacterBody2D
@@ -135,10 +135,12 @@ func _on_held_candle_area_entered(area: Area2D) -> void:
 		else:
 			print(\"cant light that son\")
 	if area.is_in_group(\"Wind\"):
+		print(\"match area in wind\")
 		current_wind_object = area
 
 func _on_held_match_area_exited(area: Area2D) -> void:
 	if area.is_in_group(\"Wind\"):
+		print(\"match area exited\")
 		current_wind_object = null
 "
 
