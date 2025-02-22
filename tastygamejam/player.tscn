@@ -5,8 +5,8 @@ script/source = "extends CharacterBody2D
 
 #export vars
 @export var SPEED = 300.0
-@export var ACCELERATION : float = 800
-@export var DECELERATION : float = 600
+@export var ACCELERATION : float = 3000
+@export var DECELERATION : float = 4000
 
 @export var MAX_CANDLE_DURATION : float = 1000
 @export var CANDLE_BURN_SPEED : float = 10;
@@ -50,8 +50,6 @@ func handle_movement(delta: float) -> void:
 	else:
 		velocity = velocity.move_toward(Vector2.ZERO, DECELERATION * delta)
 
-	# Move the player
-	velocity = direction * SPEED
 	move_and_slide()
 
 func handle_rotation() -> void:
@@ -63,7 +61,7 @@ func handle_rotation() -> void:
 	rotation = angle_to_mouse
 
 func _on_held_candle_area_entered(area: Area2D) -> void:
-	if area.name == \"Candle\":
+	if area.is_in_group(\"CandleFire\"):
 		var candle = area
 		if candle.is_lit:
 			candle_life = MAX_CANDLE_DURATION

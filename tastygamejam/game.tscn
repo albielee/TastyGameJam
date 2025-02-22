@@ -1,7 +1,10 @@
-[gd_scene load_steps=5 format=4 uid="uid://dnyderq5mg87n"]
+[gd_scene load_steps=8 format=4 uid="uid://cg85ee30dfwk3"]
 
 [ext_resource type="Texture2D" uid="uid://0vucvefrois" path="res://Assets/mainlevbuild.png" id="1_xmjuj"]
-[ext_resource type="PackedScene" uid="uid://4ephqf128ih0" path="res://light.tscn" id="2_qyupj"]
+[ext_resource type="PackedScene" path="res://light.tscn" id="2_qyupj"]
+[ext_resource type="PackedScene" uid="uid://ymxpjsjrd8cd" path="res://player.tscn" id="3_w0sag"]
+[ext_resource type="PackedScene" uid="uid://bqqh3gjnbcdyd" path="res://candle.tscn" id="4_c1hnc"]
+[ext_resource type="Script" path="res://player_camera.gd" id="5_ivw5i"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_sb7uw"]
 texture = ExtResource("1_xmjuj")
@@ -315,3 +318,15 @@ color = Color(0.29219, 0.29219, 0.29219, 1)
 position = Vector2(249, 84)
 scale = Vector2(1.21791, 1.20688)
 shadow_enabled = true
+
+[node name="Player" parent="." instance=ExtResource("3_w0sag")]
+position = Vector2(-20, 253)
+
+[node name="Candle" parent="." instance=ExtResource("4_c1hnc")]
+position = Vector2(155, 149)
+
+[node name="Candle2" parent="." instance=ExtResource("4_c1hnc")]
+position = Vector2(603, 151)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+script = ExtResource("5_ivw5i")
