@@ -382,7 +382,6 @@ tile_map_data = PackedByteArray("AAABAAMAAAAHAAEAAAACAAMAAAAHAAIAAAADAAMAAAAHAAI
 tile_set = SubResource("TileSet_i4e34")
 
 [node name="Darkness_modulate" type="CanvasModulate" parent="."]
-visible = false
 color = Color(0.29219, 0.29219, 0.29219, 1)
 
 [node name="UI_Layer" type="CanvasLayer" parent="."]
