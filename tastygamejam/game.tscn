@@ -324,19 +324,6 @@ color = Color(0.29219, 0.29219, 0.29219, 1)
 
 [node name="UI_Layer" type="CanvasLayer" parent="."]
 
-[node name="PointLight2D" parent="." instance=ExtResource("2_qyupj")]
-position = Vector2(154, 269)
-scale = Vector2(0.5679, 0.5679)
-shadow_enabled = true
-
-[node name="Candle" parent="." instance=ExtResource("4_c1hnc")]
-position = Vector2(155, 149)
-
-[node name="Candle2" parent="." instance=ExtResource("4_c1hnc")]
-position = Vector2(603, 151)
-
-[node name="Camera2D" type="Camera2D" parent="."]
-script = ExtResource("5_ivw5i")
 [node name="Player" parent="." instance=ExtResource("3_2j4in")]
 position = Vector2(51, 270)
 
