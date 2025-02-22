@@ -5,24 +5,24 @@
 [sub_resource type="GDScript" id="GDScript_o338r"]
 script/source = "extends CharacterBody2D
 
-@onready var candlelight = $HeldCandle/CandleLight
+@onready var matchlight = $HeldMatch/MatchLight
 
 #export vars
 @export var SPEED = 300.0
 @export var ACCELERATION : float = 800
 @export var DECELERATION : float = 600
 
-@export var MAX_CANDLE_DURATION : float = 1000
-@export var CANDLE_BURN_SPEED : float = 10;
-@export var stable_candle_brightness = 2;
-@export var candle_flicker_strength = 0.5;
-@export var candle_flicker_freq = 1;
-@export var candle_flicker_recovery = 0.02 ;
-@export var candle_stable_change = 0.02 ;
+@export var MAX_MATCH_DURATION : float = 1000
+@export var MATCH_BURN_SPEED : float = 10;
+@export var STABLE_MATCH_BRIGHTNESS = 2;
+@export var MATCH_FLICKER_STRENGTH = 0.5;
+@export var MATCH_FLICKER_FREQ = 1;
+@export var MATCH_FLICKER_RECOVERY = 0.02 ;
+@export var MATCH_STABLE_CHANGE = 0.02 ;
 
-var current_candle_brightness = 0
-var candle_life : float = MAX_CANDLE_DURATION
-var candle_running_out = true
+var current_match_brightness = 0
+var match_life : float = MAX_MATCH_DURATION
+var match_running_out = true
 var stability = 1
 var rng = RandomNumberGenerator.new()
 
@@ -31,23 +31,23 @@ func _physics_process(delta: float) -> void:
 	handle_rotation();
 	
 func _process(delta: float) -> void:
-	handle_candle_life(delta)
+	handle_match_life(delta)
 
-func handle_candle_life(delta: float) -> void:
-	if(candle_running_out and candle_life > 0):
-		candle_life -= delta*CANDLE_BURN_SPEED
+func handle_match_life(delta: float) -> void:
+	if(match_running_out and match_life > 0):
+		match_life -= delta*MATCH_BURN_SPEED
 	
 	if rng.randf() > stability:
-		current_candle_brightness = (candle_flicker_strength) * current_candle_brightness
+		current_match_brightness = (MATCH_FLICKER_STRENGTH) * current_match_brightness
 	
-	if current_candle_brightness != stable_candle_brightness:
-		current_candle_brightness +=  (stable_candle_brightness - current_candle_brightness)*candle_flicker_recovery
+	if current_match_brightness != STABLE_MATCH_BRIGHTNESS:
+		current_match_brightness +=  (STABLE_MATCH_BRIGHTNESS - current_match_brightness)*MATCH_FLICKER_RECOVERY
 	
 	#add some randomness
-	current_candle_brightness += randf_range(-candle_stable_change, candle_stable_change) * current_candle_brightness
+	current_match_brightness += randf_range(-MATCH_STABLE_CHANGE, MATCH_STABLE_CHANGE) * current_match_brightness
 	stability += (1 - stability) *0.1
 	
-	candlelight.energy = current_candle_brightness
+	matchlight.energy = current_match_brightness
 
 func handle_movement(delta: float) -> void:
 	var direction = Vector2.ZERO
@@ -91,10 +91,10 @@ func _on_held_candle_area_entered(area: Area2D) -> void:
 	if area.name == \"Candle\":
 		var candle = area
 		if candle.is_lit:
-			candle_life = MAX_CANDLE_DURATION
+			match_life = MAX_MATCH_DURATION
 			print(\"Lighting from a lit candle\")
-		elif candle_life > 0:
-			candle_life = MAX_CANDLE_DURATION
+		elif match_life > 0:
+			match_life = MAX_MATCH_DURATION
 			candle.is_lit = true
 			print(\"Lighting up a new candle\")
 		else:
@@ -123,26 +123,25 @@ polygon = PackedVector2Array(15, -24, 0, 0, 12, 26, -7, 28, -23, 14, -28, 0, -22
 script = SubResource("GDScript_o338r")
 ACCELERATION = 1500.0
 DECELERATION = 2000.0
-candle_flicker_strength = 0.2
 
 [node name="PlayerCollisionShape" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_qgfh1")
 
-[node name="HeldCandle" type="Area2D" parent="." groups=["CandleFire"]]
+[node name="HeldMatch" type="Area2D" parent="." groups=["CandleFire"]]
 
-[node name="CandleCollisionShape" type="CollisionShape2D" parent="HeldCandle"]
+[node name="MatchCollisionShape" type="CollisionShape2D" parent="HeldMatch"]
 position = Vector2(36, 0)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_2dc5o")
 
-[node name="CandleLight" type="PointLight2D" parent="HeldCandle"]
+[node name="MatchLight" type="PointLight2D" parent="HeldMatch"]
 position = Vector2(36, 1)
 color = Color(0.721079, 0.187449, 0.345573, 1)
 energy = 1.7
 shadow_enabled = true
 texture = ExtResource("1_v4y45")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="HeldCandle"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="HeldMatch"]
 libraries = {
 "": SubResource("AnimationLibrary_w60f4")
 }
@@ -150,4 +149,4 @@ libraries = {
 [node name="LightOccluder2D" type="LightOccluder2D" parent="."]
 occluder = SubResource("OccluderPolygon2D_mu1d4")
 
-[connection signal="area_entered" from="HeldCandle" to="." method="_on_held_candle_area_entered"]
+[connection signal="area_entered" from="HeldMatch" to="." method="_on_held_candle_area_entered"]
