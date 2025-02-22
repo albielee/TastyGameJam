@@ -9,7 +9,6 @@
 script/source = "extends CharacterBody2D
 
 @onready var matchlight = $HeldMatch/MatchLight
-@onready var matchhead = $HeldMatch/MatchHead
 
 #export vars
 @export var SPEED = 300.0
@@ -17,16 +16,14 @@ script/source = "extends CharacterBody2D
 @export var DECELERATION : float = 600
 
 @export var MAX_MATCH_LIFE : float = 1000
-@export var MATCH_BURN_SPEED : float = 30;
+@export var MATCH_BURN_SPEED : float = 10;
 @export var STABLE_MATCH_BRIGHTNESS = 2;
 @export var MATCH_FLICKER_STRENGTH = 0.5;
 @export var MATCH_FLICKER_FREQ = 1;
 @export var MATCH_FLICKER_RECOVERY = 0.02 ;
 @export var MATCH_STABLE_CHANGE = 0.02 ;
-@export var WIND_BLOW_OUT_RANGE = 0.5
 
-var CORRECT_HEAD_SCALING
-var CORRECT_LIGHT_SCALING
+var CORRECT_HEAD_SCALING = 0.029
 
 var current_match_brightness = 0
 var match_life : float = MAX_MATCH_LIFE
@@ -34,24 +31,12 @@ var match_running_out = true
 var stability = 1
 var rng = RandomNumberGenerator.new()
 
-var current_wind_object = null;
-func _ready():
-	CORRECT_HEAD_SCALING = matchhead.scale[0]
-	CORRECT_LIGHT_SCALING = matchlight.scale[0]
-
 func _physics_process(delta: float) -> void:
 	handle_movement(delta)
 	handle_rotation();
 	
 func _process(delta: float) -> void:
 	handle_match_life(delta)
-	handle_wind()
-
-func handle_wind():
-	if current_wind_object != null:
-		if(current_wind_object.facing_direction > rotation + WIND_BLOW_OUT_RANGE or current_wind_object.facing_direction < rotation - WIND_BLOW_OUT_RANGE):
-			match_life = 0;
-			print(\"match extinguished\")
 
 func handle_match_life(delta: float) -> void:
 	if(match_running_out and match_life > 0):
@@ -68,10 +53,6 @@ func handle_match_life(delta: float) -> void:
 	stability += (1 - stability) *0.1
 	
 	matchlight.energy = current_match_brightness
-	matchhead.scale = Vector2(CORRECT_HEAD_SCALING * 2 * match_life/MAX_MATCH_LIFE,
-								CORRECT_HEAD_SCALING * 2 * match_life/MAX_MATCH_LIFE)
-	matchlight.scale = Vector2(CORRECT_LIGHT_SCALING * 2 * match_life/MAX_MATCH_LIFE,
-								CORRECT_LIGHT_SCALING * 2 * match_life/MAX_MATCH_LIFE)
 	print(match_life/MAX_MATCH_LIFE)
 
 func handle_movement(delta: float) -> void:
@@ -124,12 +105,6 @@ func _on_held_candle_area_entered(area: Area2D) -> void:
 			print(\"Lighting up a new candle\")
 		else:
 			print(\"cant light that son\")
-	if area.is_in_group(\"Wind\"):
-		current_wind_object = area
-
-func _on_held_match_area_exited(area: Area2D) -> void:
-	if area.is_in_group(\"Wind\"):
-		current_wind_object = null
 "
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qgfh1"]
@@ -153,7 +128,7 @@ STABLE_MATCH_BRIGHTNESS = 1
 [node name="PlayerCollisionShape" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_qgfh1")
 
-[node name="HeldMatch" type="Area2D" parent="." groups=["CandleFire", "Wind"]]
+[node name="HeldMatch" type="Area2D" parent="." groups=["CandleFire"]]
 position = Vector2(26, 3)
 
 [node name="MatchBody" type="Sprite2D" parent="HeldMatch"]
@@ -168,7 +143,6 @@ scale = Vector2(0.029124, 0.029124)
 texture = ExtResource("2_132f8")
 
 [node name="MatchLight" type="PointLight2D" parent="HeldMatch"]
-scale = Vector2(0.6, 0.6)
 color = Color(0.721079, 0.187449, 0.345573, 1)
 energy = 1.7
 shadow_enabled = true
@@ -188,4 +162,3 @@ scale = Vector2(0.613301, 0.613301)
 texture = ExtResource("2_7k6bu")
 
 [connection signal="area_entered" from="HeldMatch" to="." method="_on_held_candle_area_entered"]
-[connection signal="area_exited" from="HeldMatch" to="." method="_on_held_match_area_exited"]
