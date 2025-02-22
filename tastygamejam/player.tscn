@@ -46,7 +46,6 @@ func handle_candle_life(delta: float) -> void:
 	#add some randomness
 	current_candle_brightness += randf_range(-candle_stable_change, candle_stable_change) * current_candle_brightness
 	stability += (1 - stability) *0.1
-	print(stability)
 	
 	candlelight.energy = current_candle_brightness
 
