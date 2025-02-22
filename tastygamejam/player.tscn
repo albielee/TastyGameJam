@@ -1,12 +1,30 @@
-[gd_scene load_steps=3 format=3 uid="uid://ymxpjsjrd8cd"]
+[gd_scene load_steps=4 format=3 uid="uid://ymxpjsjrd8cd"]
 
 [sub_resource type="GDScript" id="GDScript_o338r"]
 script/source = "extends CharacterBody2D
 
-
+#export vars
 @export var SPEED = 300.0
 @export var ACCELERATION : float = 800
 @export var DECELERATION : float = 600
+
+@export var MAX_CANDLE_DURATION : float = 1000
+@export var CANDLE_BURN_SPEED : float = 10;
+
+#
+var candle_life : float = MAX_CANDLE_DURATION
+var candle_running_out = true
+
+func _physics_process(delta: float) -> void:
+	handle_movement(delta)
+	handle_rotation();
+	
+func _process(delta: float) -> void:
+	handle_candle_life(delta)
+
+func handle_candle_life(delta: float) -> void:
+	if(candle_running_out and candle_life > 0):
+		candle_life -= delta*CANDLE_BURN_SPEED
 
 func handle_movement(delta: float) -> void:
 	var direction = Vector2.ZERO
@@ -44,16 +62,38 @@ func handle_rotation() -> void:
 	# Rotate the player to face the mouse
 	rotation = angle_to_mouse
 
-func _physics_process(delta: float) -> void:
-	handle_movement(delta)
-	handle_rotation();
-	
+func _on_held_candle_area_entered(area: Area2D) -> void:
+	if area.name == \"Candle\":
+		var candle = area
+		if candle.is_lit:
+			candle_life = MAX_CANDLE_DURATION
+			print(\"Lighting from a lit candle\")
+		elif candle_life > 0:
+			candle_life = MAX_CANDLE_DURATION
+			candle.is_lit = true
+			print(\"Lighting up a new candle\")
+		else:
+			print(\"cant light that son\")
 "
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qgfh1"]
+radius = 28.2843
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_2dc5o"]
+radius = 3.0
+height = 42.0
 
 [node name="Player" type="CharacterBody2D"]
 script = SubResource("GDScript_o338r")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="PlayerCollisionShape" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_qgfh1")
+
+[node name="HeldCandle" type="Area2D" parent="." groups=["CandleFire"]]
+
+[node name="CandleCollisionShape" type="CollisionShape2D" parent="HeldCandle"]
+position = Vector2(36, 0)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_2dc5o")
+
+[connection signal="area_entered" from="HeldCandle" to="." method="_on_held_candle_area_entered"]
