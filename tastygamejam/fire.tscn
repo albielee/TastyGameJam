@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://cey3jyexas510"]
+[gd_scene load_steps=10 format=3 uid="uid://djbu6f3j1hned"]
 
 [sub_resource type="Curve" id="Curve_mimso"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.307377, 0), 0.0, 0.0, 0, 0]
@@ -43,6 +43,7 @@ scale_curve = SubResource("CurveTexture_yfx77")
 color_ramp = SubResource("GradientTexture1D_xhcke")
 alpha_curve = SubResource("CurveTexture_tnvit")
 hue_variation_curve = SubResource("CurveTexture_m7cay")
+collision_mode = 2
 
 [node name="Fire" type="GPUParticles2D"]
 amount = 60

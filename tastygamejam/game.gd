@@ -2,7 +2,7 @@ extends Node2D
 
 @onready var darkness = $Darkness_modulate
 
-@export var fade_in_rate = 0.3
+@export var fade_in_rate = 0.02
 
 var target_brightness
 var brightness = 0

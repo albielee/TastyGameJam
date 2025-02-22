@@ -1,10 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://ymxpjsjrd8cd"]
+[gd_scene load_steps=10 format=3 uid="uid://bh2w2wp4hhhtx"]
 
 [ext_resource type="Texture2D" uid="uid://dl81h06ieuqw6" path="res://Assets/matchbody.png" id="1_0bhld"]
 [ext_resource type="Texture2D" uid="uid://bsbv8wncu2ry0" path="res://Assets/light_basic.png" id="1_v4y45"]
 [ext_resource type="Texture2D" uid="uid://cfh5sfe6umvry" path="res://Assets/playerbasic.png" id="2_7k6bu"]
 [ext_resource type="Texture2D" uid="uid://6ibbb2bb0gux" path="res://Assets/matchhead.png" id="2_132f8"]
-[ext_resource type="PackedScene" uid="uid://cey3jyexas510" path="res://fire.tscn" id="5_h0cvo"]
+[ext_resource type="PackedScene" uid="uid://djbu6f3j1hned" path="res://fire.tscn" id="5_h0cvo"]
 
 [sub_resource type="GDScript" id="GDScript_o338r"]
 script/source = "extends CharacterBody2D
@@ -18,7 +18,7 @@ script/source = "extends CharacterBody2D
 @export var ACCELERATION : float = 800
 @export var DECELERATION : float = 600
 
-@export var MAX_MATCH_LIFE : float = 1000
+@export var MAX_MATCH_LIFE : float = 800
 @export var MATCH_BURN_SPEED : float = 30;
 @export var STABLE_MATCH_BRIGHTNESS = 2;
 @export var MATCH_FLICKER_STRENGTH = 0.5;
@@ -89,13 +89,13 @@ func handle_movement(delta: float) -> void:
 	var new_velocity = Vector2.ZERO
 
 	# Input for movement: Arrow keys or WASD
-	if Input.is_action_pressed(\"ui_right\"):
+	if Input.is_action_pressed(\"move_right\"):
 		direction.x += 1
-	if Input.is_action_pressed(\"ui_left\"):
+	if Input.is_action_pressed(\"move_left\"):
 		direction.x -= 1
-	if Input.is_action_pressed(\"ui_down\"):
+	if Input.is_action_pressed(\"move_down\"):
 		direction.y += 1
-	if Input.is_action_pressed(\"ui_up\"):
+	if Input.is_action_pressed(\"move_up\"):
 		direction.y -= 1
 
 	# Normalize the direction to ensure consistent movement speed in all directions
