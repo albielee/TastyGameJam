@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bh2w2wp4hhhtx"]
+[gd_scene load_steps=8 format=3 uid="uid://ymxpjsjrd8cd"]
 
 [ext_resource type="Texture2D" uid="uid://bsbv8wncu2ry0" path="res://Assets/light_basic.png" id="1_v4y45"]
 
@@ -19,6 +19,7 @@ script/source = "extends CharacterBody2D
 @export var MATCH_FLICKER_FREQ = 1;
 @export var MATCH_FLICKER_RECOVERY = 0.02 ;
 @export var MATCH_STABLE_CHANGE = 0.02 ;
+@export var WIND_BLOW_OUT_RANGE = 0.5
 
 var current_match_brightness = 0
 var match_life : float = MAX_MATCH_DURATION
@@ -26,12 +27,21 @@ var match_running_out = true
 var stability = 1
 var rng = RandomNumberGenerator.new()
 
+var current_wind_object = null;
+
 func _physics_process(delta: float) -> void:
 	handle_movement(delta)
 	handle_rotation();
 	
 func _process(delta: float) -> void:
 	handle_match_life(delta)
+	handle_wind()
+
+func handle_wind():
+	if current_wind_object != null:
+		if(current_wind_object.facing_direction > rotation + WIND_BLOW_OUT_RANGE or current_wind_object.facing_direction < rotation - WIND_BLOW_OUT_RANGE):
+			match_life = 0;
+			print(\"match extinguished\")
 
 func handle_match_life(delta: float) -> void:
 	if(match_running_out and match_life > 0):
@@ -88,7 +98,7 @@ func handle_rotation() -> void:
 	rotation = angle_to_mouse
 
 func _on_held_candle_area_entered(area: Area2D) -> void:
-	if area.name == \"Candle\":
+	if area.is_in_group(\"CandleFire\"):
 		var candle = area
 		if candle.is_lit:
 			match_life = MAX_MATCH_DURATION
@@ -99,6 +109,12 @@ func _on_held_candle_area_entered(area: Area2D) -> void:
 			print(\"Lighting up a new candle\")
 		else:
 			print(\"cant light that son\")
+	if area.is_in_group(\"Wind\"):
+		current_wind_object = area
+
+func _on_held_match_area_exited(area: Area2D) -> void:
+	if area.is_in_group(\"Wind\"):
+		current_wind_object = null
 "
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qgfh1"]
@@ -127,7 +143,8 @@ DECELERATION = 2000.0
 [node name="PlayerCollisionShape" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_qgfh1")
 
-[node name="HeldMatch" type="Area2D" parent="." groups=["CandleFire"]]
+[node name="HeldMatch" type="Area2D" parent="." groups=["CandleFire", "Wind"]]
+position = Vector2(0, -1)
 
 [node name="MatchCollisionShape" type="CollisionShape2D" parent="HeldMatch"]
 position = Vector2(36, 0)
@@ -150,3 +167,4 @@ libraries = {
 occluder = SubResource("OccluderPolygon2D_mu1d4")
 
 [connection signal="area_entered" from="HeldMatch" to="." method="_on_held_candle_area_entered"]
+[connection signal="area_exited" from="HeldMatch" to="." method="_on_held_match_area_exited"]

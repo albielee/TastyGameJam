@@ -1,7 +1,7 @@
-[gd_scene load_steps=8 format=4 uid="uid://dnyderq5mg87n"]
+[gd_scene load_steps=8 format=4 uid="uid://cg85ee30dfwk3"]
 
 [ext_resource type="Texture2D" uid="uid://0vucvefrois" path="res://Assets/mainlevbuild.png" id="1_xmjuj"]
-[ext_resource type="PackedScene" uid="uid://bh2w2wp4hhhtx" path="res://player.tscn" id="3_2j4in"]
+[ext_resource type="PackedScene" uid="uid://ymxpjsjrd8cd" path="res://player.tscn" id="3_2j4in"]
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_7l6ho"]
 polygon = PackedVector2Array(-14.1421, 14.8492, -24, 18.0312, -24, 8.13173)
