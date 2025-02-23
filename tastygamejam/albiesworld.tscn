@@ -2,8 +2,8 @@
 
 [ext_resource type="PackedScene" uid="uid://bh2w2wp4hhhtx" path="res://player.tscn" id="1_8lb6i"]
 [ext_resource type="Script" path="res://camera_2d.gd" id="2_072x2"]
+[ext_resource type="PackedScene" uid="uid://dm2jrjjq1ihb3" path="res://wind_right.tscn" id="4_0l20d"]
 [ext_resource type="PackedScene" uid="uid://g48fcp5lmk5k" path="res://candle.tscn" id="4_7fdrq"]
-[ext_resource type="PackedScene" uid="uid://bwbdqqagtxtdy" path="res://wind_left.tscn" id="5_7g68r"]
 
 [node name="albiesworld" type="Node2D"]
 position = Vector2(590, 175)
@@ -18,12 +18,5 @@ script = ExtResource("2_072x2")
 [node name="Candle" parent="." instance=ExtResource("4_7fdrq")]
 position = Vector2(-316, 79)
 
-[node name="WindLeft" parent="." instance=ExtResource("5_7g68r")]
-position = Vector2(377, 83)
-TIMED_WIND = true
-WIND_INTERNAL = 7
-
-[node name="CollisionShape2D" parent="WindLeft" index="1"]
-position = Vector2(271.375, -1)
-
-[editable path="WindLeft"]
+[node name="WindRight" parent="." instance=ExtResource("4_0l20d")]
+position = Vector2(-28, 219)

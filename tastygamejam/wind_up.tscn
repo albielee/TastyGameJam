@@ -49,6 +49,7 @@ collision_friction = 0.0
 collision_bounce = 0.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1yyqn"]
+resource_local_to_scene = true
 size = Vector2(217.25, 253)
 
 [node name="WindUp" type="Area2D" groups=["Wind"]]
