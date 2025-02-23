@@ -20,6 +20,14 @@ offset_right = 40.0
 offset_bottom = 40.0
 texture = ExtResource("2_qcmne")
 
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 249.0
+offset_top = 258.0
+offset_right = 705.0
+offset_bottom = 298.0
+text = "X / 15 Candles were Lit"
+
 [node name="Button" type="Button" parent="."]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 0

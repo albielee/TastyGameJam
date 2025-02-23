@@ -43,9 +43,10 @@ func _process(delta: float) -> void:
 
 func do_lightning():
 	doing_lightning = true
+	var rand_fact = randf_range(0.6,1.4)
 	for child in all_lights:
 		child.get_child(0).energy = 0
-		child.get_child(1).energy = LIGHTNING_BASE_ENERGY * randf_range(0.6,1.4)
+		child.get_child(1).energy = LIGHTNING_BASE_ENERGY * rand_fact
 
 
 func stop_lightning():

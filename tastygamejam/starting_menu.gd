@@ -7,7 +7,7 @@ extends Control
 
 var start_game = false
 
-var t = 0
+var t = 0.0
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:

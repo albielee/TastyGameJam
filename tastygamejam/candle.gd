@@ -5,8 +5,11 @@ extends StaticBody2D
 @onready var fire = $Fire;
 
 signal start_game;
+signal end_game;
+signal candle_lit;
 
 @export var FIRST_CANDLE = false;
+@export var LAST_CANDLE = false;
 @export var STABLE_CANDLE_BRIGHTNESS = 2;
 @export var CANDLE_RECOVERY = 0.02;
 @export var CANDLE_STABLE_CHANGE = 0.02 ;
@@ -35,5 +38,8 @@ func light():
 	is_lit = true
 	fire.visible = true
 	#lit_sprite.visible = true
+	emit_signal('candle_lit')
 	if FIRST_CANDLE:
 		emit_signal('start_game')
+	if LAST_CANDLE:
+		emit_signal('end_game')

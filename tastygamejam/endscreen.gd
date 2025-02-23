@@ -4,10 +4,15 @@ extends Control
 @export var wait_after_fade = 1.5
 
 @onready var modulator = $CanvasModulate
+@onready var text = $RichTextLabel
 
 var start_game = false
 
 var t = 0
+
+func _ready() -> void:
+	print(global.candles_done)
+	text.text = str(global.candles_done) + " out of fifteen candles were lit."
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
