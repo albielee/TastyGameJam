@@ -15,3 +15,5 @@ layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 texture = ExtResource("2_5pagr")
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]

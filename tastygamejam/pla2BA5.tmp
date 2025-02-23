@@ -11,8 +11,7 @@ script/source = "extends CharacterBody2D
 
 @onready var matchlight = $HeldMatch/MatchLight
 @onready var matchhead = $HeldMatch/MatchHead
-@onready var matchFireHolder = $HeldMatch/FireHolder
-@onready var matchFire = $HeldMatch/FireHolder/Fire
+@onready var matchFire = $HeldMatch/Fire
 
 @onready var mainTileMap = get_parent().get_child(0)
 
@@ -35,31 +34,27 @@ var CORRECT_HEAD_SCALING
 var CORRECT_LIGHT_SCALING
 var CORRECT_FIRE_SCALING
 
-var WALL_TILES_IDS = [
-	\"(6, 11)\",
-	\"(6, 10)\"
-]
-
 var current_match_brightness = 0
 var match_life : float = MAX_MATCH_LIFE
 var match_running_out = false
 var stability = 1
 var rng = RandomNumberGenerator.new()
 var is_lit = true
-var match_cell_pos;
 
 var current_wind_object = null;
 func _ready():
 	CORRECT_HEAD_SCALING = matchhead.scale[0]
 	CORRECT_LIGHT_SCALING = matchlight.scale[0]
 	CORRECT_FIRE_SCALING = matchFire.scale[0]
-	matchFireHolder.visible = true
+	matchFire.visible = true
 
 func _physics_process(delta: float) -> void:
 	handle_movement(delta)
 	handle_rotation();
 	
 func _process(delta: float) -> void:
+	var cell_pos = mainTileMap.local_to_map(mainTileMap.to_local(matchhead.global_position))
+	print(mainTileMap.get_cell_source_id(1, cell_pos))
 	handle_match_life(delta)
 	handle_wind(delta)
 
@@ -73,12 +68,6 @@ func handle_wind(delta: float):
 func handle_match_life(delta: float) -> void:
 	if(match_running_out and match_life > 0):
 		match_life -= delta*MATCH_BURN_SPEED
-		
-		#check if match is in a wall
-		match_cell_pos = mainTileMap.local_to_map(mainTileMap.to_local(matchhead.global_position))
-		if str(mainTileMap.get_cell_atlas_coords(match_cell_pos)) in WALL_TILES_IDS:
-			extuinguish()
-		
 	if match_life <= 0:
 		extuinguish()
 	
@@ -103,14 +92,14 @@ func handle_match_life(delta: float) -> void:
 func extuinguish():
 	match_life = 0
 	is_lit = false
-	matchFireHolder.visible = false
+	matchFire.visible = false
 	matchlight.visible = false
 	matchhead.visible = false
 
 func light():
 	match_life = MAX_MATCH_LIFE
 	is_lit = true
-	matchFireHolder.visible = true
+	matchFire.visible = true
 	matchlight.visible = true
 	matchhead.visible = true
 
@@ -156,25 +145,36 @@ func handle_rotation() -> void:
 	rotation = angle_to_mouse
 
 func _on_held_candle_area_entered(area: Area2D) -> void:
+	print(area)
 	if area.is_in_group('CandleFire'):
 		var candle = area.get_parent()
 		if candle.is_lit:
 			match_life = MAX_MATCH_LIFE
 			if not is_lit: light()
+			print(\"Lighting from a lit candle\")
 		elif match_life > 0:
 			match_life = MAX_MATCH_LIFE
 			if candle.FIRST_CANDLE:
 				match_running_out = true
 			candle.light()
+			print(\"Lighting up a new candle\")
+		else:
+			print(\"cant light that son\")
 	elif area.is_in_group(\"Wind\"):
+		print(\"match area in wind\")
 		current_wind_object = area
 	else:
-		if match_running_out and is_lit:
-			extuinguish()
+		extuinguish()
+	
 
 func _on_held_match_area_exited(area: Area2D) -> void:
 	if area.is_in_group(\"Wind\"):
+		print(\"match area exited\")
 		current_wind_object = null
+
+
+func _on_held_match_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
+	print()
 "
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bd6o0"]
@@ -229,10 +229,8 @@ texture = ExtResource("1_v4y45")
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_2dc5o")
 
-[node name="FireHolder" type="Node2D" parent="HeldMatch"]
+[node name="Fire" parent="HeldMatch" instance=ExtResource("5_h0cvo")]
 position = Vector2(1, 0)
-
-[node name="Fire" parent="HeldMatch/FireHolder" instance=ExtResource("5_h0cvo")]
 lifetime = 1.0
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="."]
