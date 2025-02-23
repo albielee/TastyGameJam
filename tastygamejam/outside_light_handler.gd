@@ -3,7 +3,7 @@ extends Node2D
 # handle all the 'lightning' effects
 
 var LIGHTNING_BASE_ENERGY = 11;
-var LIGHTNING_STOP_CHANCE = 0.9;
+var LIGHTNING_STOP_CHANCE = 0.85;
 
 var LIGHTNING_FREQ = 0.99;
 
@@ -42,11 +42,10 @@ func _process(delta: float) -> void:
 		
 
 func do_lightning():
-	print('cachow!!')
 	doing_lightning = true
 	for child in all_lights:
 		child.get_child(0).energy = 0
-		child.get_child(1).energy = LIGHTNING_BASE_ENERGY
+		child.get_child(1).energy = LIGHTNING_BASE_ENERGY * randf_range(0.6,1.4)
 
 
 func stop_lightning():

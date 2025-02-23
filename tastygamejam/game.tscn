@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=4 uid="uid://dnyderq5mg87n"]
+[gd_scene load_steps=33 format=4 uid="uid://dnyderq5mg87n"]
 
 [ext_resource type="Script" path="res://game.gd" id="1_hva66"]
 [ext_resource type="Texture2D" uid="uid://0vucvefrois" path="res://Assets/mainlevbuild.png" id="1_xmjuj"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" path="res://blocked_tutorial.gd" id="3_p80qm"]
 [ext_resource type="Texture2D" uid="uid://cc85o67i8gte0" path="res://Assets/tutorial_text.png" id="4_o13of"]
 [ext_resource type="PackedScene" uid="uid://bugylwajvuqrr" path="res://suitofarmor.tscn" id="4_pcnti"]
+[ext_resource type="Texture2D" uid="uid://db1qqtijimxsq" path="res://Assets/moonlight.png" id="4_v4rbf"]
 [ext_resource type="PackedScene" path="res://camera_2d.tscn" id="5_e3seu"]
 [ext_resource type="Script" path="res://winddown.gd" id="6_8x8b7"]
 [ext_resource type="PackedScene" path="res://wind_right.tscn" id="6_bg1js"]
@@ -436,8 +437,38 @@ position = Vector2(8, -224)
 scale = Vector2(0.80339, 1.81393)
 shadow_enabled = true
 
+[node name="OutsideLight2" type="Node2D" parent="OutsideLightHandler"]
+position = Vector2(1399, -220)
+
+[node name="MoonLight" type="PointLight2D" parent="OutsideLightHandler/OutsideLight2"]
+position = Vector2(-3, -208)
+scale = Vector2(0.385127, 2.10608)
+texture = ExtResource("4_v4rbf")
+
+[node name="Lightning" type="PointLight2D" parent="OutsideLightHandler/OutsideLight2"]
+position = Vector2(8, -224)
+scale = Vector2(0.80339, 1.81393)
+energy = 0.0
+shadow_enabled = true
+texture = ExtResource("4_v4rbf")
+
+[node name="OutsideLight3" type="Node2D" parent="OutsideLightHandler"]
+position = Vector2(1822, -228)
+
+[node name="MoonLight" type="PointLight2D" parent="OutsideLightHandler/OutsideLight3"]
+position = Vector2(-3, -208)
+scale = Vector2(0.385127, 2.10608)
+texture = ExtResource("4_v4rbf")
+
+[node name="Lightning" type="PointLight2D" parent="OutsideLightHandler/OutsideLight3"]
+position = Vector2(8, -224)
+scale = Vector2(0.80339, 1.81393)
+energy = 0.0
+shadow_enabled = true
+texture = ExtResource("4_v4rbf")
+
 [node name="Player" parent="." instance=ExtResource("3_2j4in")]
-position = Vector2(1016, 271)
+position = Vector2(2626, 220)
 
 [node name="WindowSills" type="Node2D" parent="."]
 position = Vector2(1320, 167)
