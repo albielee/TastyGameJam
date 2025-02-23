@@ -165,7 +165,7 @@ func _on_held_match_area_exited(area: Area2D) -> void:
 "
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bd6o0"]
-radius = 21.0
+radius = 15.0
 height = 56.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_2dc5o"]
@@ -173,7 +173,7 @@ radius = 3.0
 height = 6.00001
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_mu1d4"]
-polygon = PackedVector2Array(15, -24, 0, 0, 12, 26, -7, 28, -23, 14, -28, 0, -22, -16, -7, -28)
+polygon = PackedVector2Array(15, -24, 0, 0, 9, 21, -7, 18, -16, 9, -18, -4, -14, -17, 0, -32)
 
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 3
@@ -186,6 +186,7 @@ MATCH_BURN_SPEED = 45.0
 STABLE_MATCH_BRIGHTNESS = 1
 
 [node name="PlayerCollisionShape" type="CollisionShape2D" parent="."]
+position = Vector2(5, -3)
 shape = SubResource("CapsuleShape2D_bd6o0")
 
 [node name="HeldMatch" type="Area2D" parent="." groups=["CandleFire", "Wind"]]
@@ -203,6 +204,7 @@ scale = Vector2(0.029124, 0.029124)
 texture = ExtResource("2_132f8")
 
 [node name="MatchLight" type="PointLight2D" parent="HeldMatch"]
+position = Vector2(4, -2)
 scale = Vector2(0.6, 0.6)
 color = Color(0.721079, 0.187449, 0.345573, 1)
 energy = 1.7
@@ -219,6 +221,7 @@ position = Vector2(1, 0)
 lifetime = 1.0
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="."]
+position = Vector2(6, 1)
 occluder = SubResource("OccluderPolygon2D_mu1d4")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

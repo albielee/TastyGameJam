@@ -467,9 +467,6 @@ energy = 0.0
 shadow_enabled = true
 texture = ExtResource("4_v4rbf")
 
-[node name="Player" parent="." instance=ExtResource("3_2j4in")]
-position = Vector2(2626, 220)
-
 [node name="WindowSills" type="Node2D" parent="."]
 position = Vector2(1320, 167)
 scale = Vector2(1.4062, 1.26011)
@@ -561,6 +558,9 @@ rotation = 3.13188
 [node name="SuitofArmor2" parent="Armors" instance=ExtResource("4_pcnti")]
 position = Vector2(1, 188)
 rotation = 3.11597
+
+[node name="Player" parent="." instance=ExtResource("3_2j4in")]
+position = Vector2(1080, 254)
 
 [node name="Camera2D" parent="." instance=ExtResource("5_e3seu")]
 position = Vector2(471.653, 100.224)
