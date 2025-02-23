@@ -11,7 +11,7 @@ var facing_direction = 1.5708
 var wind_on = true
 
 func _ready() -> void:
-	timer.wait_time = WIND_INTERNAL
+	#timer.wait_time = WIND_INTERNAL
 	var material = gpu_particles.process_material
 	material.emission_box_extents = Vector3(collision_shape.shape.size.x/2 + 200,collision_shape.shape.size.y/2,0)
 	gpu_particles.amount = (collision_shape.shape.size.x/collision_shape.shape.size.y) * 10

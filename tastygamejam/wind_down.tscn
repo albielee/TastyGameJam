@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bsvutuuhu72of"]
+[gd_scene load_steps=12 format=3 uid="uid://dkwwkjxfhfwyi"]
 
 [ext_resource type="Texture2D" uid="uid://duqj0vmmjbghj" path="res://Assets/wind.png" id="1_f8v7e"]
 [ext_resource type="Script" path="res://winddown.gd" id="1_vbutp"]

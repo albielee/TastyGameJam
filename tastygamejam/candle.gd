@@ -4,6 +4,9 @@ extends StaticBody2D
 @onready var lit_sprite = $Lit_sprite;
 @onready var fire = $Fire;
 
+signal start_game;
+
+@export var FIRST_CANDLE = false;
 @export var STABLE_CANDLE_BRIGHTNESS = 2;
 @export var CANDLE_RECOVERY = 0.02;
 @export var CANDLE_STABLE_CHANGE = 0.02 ;
@@ -16,7 +19,7 @@ func _ready() -> void:
 	fire.visible = false
 	if is_lit:
 		current_candle_brightness = STABLE_CANDLE_BRIGHTNESS
-		lit_sprite.visible = true
+		#lit_sprite.visible = true
 
 func _process(_delta: float) -> void:
 	if is_lit:
@@ -31,4 +34,6 @@ func _process(_delta: float) -> void:
 func light():
 	is_lit = true
 	fire.visible = true
-	lit_sprite.visible = true
+	#lit_sprite.visible = true
+	if FIRST_CANDLE:
+		emit_signal('start_game')
