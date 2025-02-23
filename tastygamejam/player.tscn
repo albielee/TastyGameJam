@@ -207,6 +207,7 @@ scale = Vector2(0.6, 0.6)
 color = Color(0.721079, 0.187449, 0.345573, 1)
 energy = 1.7
 shadow_enabled = true
+shadow_filter = 2
 texture = ExtResource("1_v4y45")
 
 [node name="MatchCollisionShape" type="CollisionShape2D" parent="HeldMatch"]

@@ -27,7 +27,7 @@ func _process(delta: float) -> void:
 		darkness.color = Color(brightness, brightness, brightness, 255)
 	if fade_out_tut:
 		if ui_fade.color[3] > 0:
-			ui_fade.color[3] -= delta * 0.1
+			ui_fade.color[3] -= delta * 0.15
 	elif fade_in_tut:
 		if ui_fade.color[3] < 1:
 			ui_fade.color[3] += delta * 0.1
